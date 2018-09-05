@@ -23,8 +23,7 @@ int main() {
         scanf("%c", &c);
     }
     for (int j = 0; j < i; j++) {
-        if (password[j] == 'z') password[j] = 'a';
-        else password[j] = password[j] + 1;
+        password[j] = (password[j] - 'a' + n) % 26 + 'a';
     }
     for (int j = 0; j < i; j++) {
         printf("%c", password[j]);
