@@ -12,20 +12,12 @@
 char password[MAX + 5] = {0};
 
 int main() {
-    int n, i = 0;
-    char c;
-    scanf("%d", &n);
-    getchar();
-    scanf("%c", &c);
-    while (c != '\n') {
-        password[i] = c;
-        i++;
-        scanf("%c", &c);
-    }
-    for (int j = 0; j < i; j++) {
+    int n;
+    scanf("%d%s", &n, password);
+    for (int j = 0; password[j] != '\0'; j++) {
         password[j] = (password[j] - 'a' + n) % 26 + 'a';
     }
-    for (int j = 0; j < i; j++) {
+    for (int j = 0; password[j] != '\0'; j++) {
         printf("%c", password[j]);
     }
     printf("\n");
