@@ -58,7 +58,7 @@ int main() {
             flag = 0;
             printf("%c", num[i]);
         } 
-        printf("%");
+        printf("%%");
     } else {
         if (length ==0 && num[0] == '0') {
             printf("0");
