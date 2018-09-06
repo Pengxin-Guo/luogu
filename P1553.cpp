@@ -60,15 +60,12 @@ int main() {
         } 
         printf("%%");
     } else {
-        if (length ==0 && num[0] == '0') {
-            printf("0");
-        } else {
-            for (int i = length - 1; i >= 0; i--) {
-                if (flag && num[i] == '0') continue;
-                flag = 0;
-                printf("%c", num[i]);
-            }
+        for (int i = length - 1; i >= 0; i--) {
+            if (flag && num[i] == '0') continue;
+            flag = 0;
+            printf("%c", num[i]);
         }
+        if (flag == 1) printf("0");
     }
     printf("\n");
     return 0;
