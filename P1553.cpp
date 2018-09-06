@@ -26,6 +26,7 @@ int main() {
             flag = 0;
             printf("%c", num[i]);
         }
+        if (flag == 1) printf("0");
         printf(".");
         int j;
         for (j = decimal + 1; j < length; j++) {
@@ -44,6 +45,7 @@ int main() {
             flag = 0;
             printf("%c", num[i]);
         }
+        if (flag == 1) printf("0");
         printf("/");
         int flag2 = 1;
         for (int i = length - 1; i > fraction; i--) {
@@ -57,7 +59,8 @@ int main() {
             if (flag && num[i] =='0') continue;
             flag = 0;
             printf("%c", num[i]);
-        } 
+        }
+        if (flag == 1) printf("0");
         printf("%%");
     } else {
         for (int i = length - 1; i >= 0; i--) {
