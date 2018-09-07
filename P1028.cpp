@@ -11,7 +11,7 @@
 
 int data[MAX + 5] = {0};
 
-void init() {
+void init() { //打表
     for (int i = 1; i <= MAX; i++) {
         for (int j = 0; j <= i/2; j++) {
             data[i] += data[j];
