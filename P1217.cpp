@@ -4,9 +4,12 @@
 	> Mail: 1457495424@qq.com 
 	> Created Time: 2018年09月09日 星期日 20时49分59秒
  ************************************************************************/
+//11的整倍数有一个性质,那就是奇数位上数字之和=偶数位上数字之和.
+//那么偶数位数回文数，必定能被11整除
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #define MAX 10000000
 
 int prime[MAX + 5] = {0};
@@ -44,11 +47,16 @@ int valid(int a) {
     return num == a;
 }
 
+int digit(int n) {
+    return floor(log10(n)) + 1;
+}
+
 int main() {
     init();
     int a, b;
     scanf("%d%d", &a, &b);
-    for (int i = (a >= 2 ? a : 2); i <= b; i++) {
+    for (int i = a; i <= b; i++) {
+        if (digit(i) > 3 && digit(i) % 2 == 0) i = (int)pow(10, digit(i));
         if (i % 2 == 0) continue;
         if (!valid(i)) continue;
         if (!binary(i)) continue;
