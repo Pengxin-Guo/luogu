@@ -1,2 +1,2 @@
 # luogu
-luogu practice
+`luogu` 练习题代码
