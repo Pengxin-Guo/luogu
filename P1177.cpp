@@ -5,6 +5,7 @@
 	> Created Time: 2019年05月27日 星期一 20时32分18秒
  ************************************************************************/
 // 普通的快排过不去, 需要优化基准值的选取
+// 但是最后一组数据还是会TLE
 
 #include <iostream>
 #include <cstdio>
@@ -16,23 +17,19 @@ using namespace std;
 int arr[MAX_N + 5];
 int n;
 
-void myswap(int &a, int &b) {
-    int temp = a;
-    a = b;
-    b = temp;
-    return ;
-}
-
-int random(int *a, int l, int r) {
-    srand(time(0));
-    int pivot = rand() % (r - l) + l;
-    myswap(a[pivot], a[l]); 
+// 随机快排
+int partition(int *a, int l, int r) {
+    //srand(time(0));
+    int p = rand() % (r - l) + l;
+    if (l == p) return a[l];
+    a[p] ^= a[l], a[l] ^= a[p], a[p] ^= a[l];
     return a[l];
 }
 
+
 void quick_sort(int *num, int l, int r) {
     if (r <= l) return ;
-    int x = l, y = r, z = random(num, l, r);
+    int x = l, y = r, z = partition(num, l, r);
     while (x < y) {
         while (x < y && num[y] >= z) --y;
         if (x < y) num[x++] = num[y];
