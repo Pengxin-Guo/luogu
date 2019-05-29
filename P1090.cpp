@@ -17,7 +17,7 @@ LL arr[MAX_N + 5];
 LL sum = 0;
 
 void haffman(LL *arr, int n) {
-    for (int i = 0; i < n - 1; i++) {
+    for (int i = 0; i < n - 1; i++) {               // 遍历n - 1次
         for (int j = 0; j < n - i - 1; j++) {
             if (arr[j] < arr[n - i - 1]) {
                 swap(arr[j], arr[n - i - 1]);       // arr[n - i - 1]存放最小的那个值
