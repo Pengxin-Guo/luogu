@@ -1,81 +1,77 @@
 /*************************************************************************
-	> File Name: P1092.cpp
-	> Author: gpx
-	> Mail: 1457495424@qq.com
-	> Created Time: 2019年06月12日 星期三 20时53分46秒
- ************************************************************************/
+    > File Name: P1092.cpp
+    > Author: gpx
+    > Mail: 1457495424@qq.com
+    > Created Time: 2019年06月12日 星期三 20时53分46秒
+************************************************************************/
 
 #include <iostream>
+#include <cstdio>
+#include <cmath>
+#include <cstring>
 #include <algorithm>
+#include <string>
+#include <cstdlib>
 using namespace std;
-#define MAX_N 26
 
-int ans[MAX_N + 5]; // ans[0]存放A代表的数字, ans[1]存放B代表的数字,...依次类推
-string str1, str2, str3;
+char a[30], b[30], c[30];
+// u数组代表有没有标记这个字母, used数组代表有没有用这个数字
+// p数组用来记录出现字母的顺序和字母的对应次序
+// t数字代表字母和数字的对应, 即解码
+int t[300], used[30], p[30], u[30], cnt;
 int n;
 
-void init() {
-    for (int i = 0; i < 26; i++) {
-        ans[i] = i;
+void judge() {
+    int carry = 0;
+    for (int i = n; i > 0; i--) {
+        int s = t[int(a[i])] + t[int(b[i])] + carry;
+        if (t[int(c[i])] != s % n) return ;
+        carry = s / n;
     }
-    return ;
+    cout << t[int('A')];
+    for (int i = 'A' + 1; i <= 'A' + n - 1; i++) {
+        cout << " " << t[i];
+    }
+    cout << endl;
+    exit(0);
 }
 
-int *add(string str1, string str2) {
-    int *ret = (int *)malloc(sizeof(int) * n);
-    for (int i = n - 1; i >= 0; i--) {
-        ret[i] += ans[str1[i] - 'A' + str2[i] - 'A'];
-        while (ret[i] >= n) {
-            ret[i] -= n;
-            ret[i - 1] += 1;
-        }
-    }
-    return ret;
-}
-
-int *str_int(string str) {
-    int *ret = (int *)malloc(sizeof(int) * n);
-    for (int i = 0; i < n; i++) {
-        ret[i] = ans[str[i] - 'A'];
-    }
-    return ret;
-}
-
-int same(int *ans1, int *temp) {
-    for (int i = 0; i < n; i++) {
-        if (ans1[i] != temp[i]) return 0;
+int ok() {
+    for (int i = n; i > 0; i--) {
+        if (t[int(a[i])] == -1 || t[int(b[i])] == -1 || t[int(c[i])] == -1) continue;
+        if ((t[int(a[i])] + t[int(b[i])]) % n != t[int(c[i])] && (t[int(a[i])] + t[int(b[i])] + 1) % n != t[int(c[i])]) return 0;
     }
     return 1;
 }
 
-void output(int *num) {
-    for (int i = 0; i < n; i++) {
-        cout << num[i] << " ";
+void dfs(int now) {
+    if (now > n) {
+        judge();
+        return ;
     }
-    cout << endl;
+    // 从低位向高位判断
+    for (int i = n - 1; i >= 0; i--) {
+        if (used[i]) continue;
+        t[p[now] + 'A' - 1] = i;
+        if (ok()) {
+            used[i] = 1;
+            dfs(now + 1);
+            used[i] = 0;
+        }
+    }
+    t[p[now] + 'A' - 1] = -1;
     return ;
 }
 
 int main() {
-    init();
+    memset(t, -1, sizeof(t));
     cin >> n;
-    cin >> str1 >> str2 >> str3;
-    do {
-        int *ans1 = str_int(str3);
-        int *temp = add(str1, str2);
-        if (same(ans1, temp)) break;
-        cout << "ans :";
-        output(ans);
-        cout << "should: ";
-        output(ans1);
-        cout << "cal: ";
-        output(temp);
-        cout << endl;
-    } while (next_permutation(ans, ans + n));
-    for (int i = 0; i < n; i++) {
-        i == 0 || cout << " ";
-        cout << ans[i];
+    cin >> a + 1 >> b + 1 >> c + 1;
+    for (int i = n; i > 0; i--) {
+        if (!u[a[i] - 'A' + 1]) p[++cnt] = a[i] - 'A' + 1, u[a[i] - 'A' + 1] = 1;
+        if (!u[b[i] - 'A' + 1]) p[++cnt] = b[i] - 'A' + 1, u[b[i] - 'A' + 1] = 1;
+        if (!u[c[i] - 'A' + 1]) p[++cnt] = c[i] - 'A' + 1, u[c[i] - 'A' + 1] = 1;
     }
-    cout << endl;
+    dfs(1);
     return 0;
 }
